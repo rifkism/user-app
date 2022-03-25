@@ -2,7 +2,7 @@ import React, { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
 import searchIcon from '../../assets/icons/search.png'
 
-const Label = styled.label<{ for: string }>`
+const Label = styled.label<{ htmlFor: string }>`
   display: block;
   margin-bottom: 4px;
 `
@@ -33,7 +33,7 @@ interface SearchInputProps {
 const SearchInput: FC<SearchInputProps> = ({ onChange, value }) => {
   return (
     <Wrapper>
-      <Label for='search'>Search:</Label>
+      <Label htmlFor='search'>Search:</Label>
       <InputWrapper>
         <Input
           id='search'
