@@ -1,8 +1,8 @@
-import { ChangeEvent, FC } from 'react'
+import React, { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
 import searchIcon from '../../assets/icons/search.png'
 
-const Label = styled.label`
+const Label = styled.label<{ for: string }>`
   display: block;
   margin-bottom: 4px;
 `
@@ -33,9 +33,10 @@ interface SearchInputProps {
 const SearchInput: FC<SearchInputProps> = ({ onChange, value }) => {
   return (
     <Wrapper>
-      <Label>Search:</Label>
+      <Label for='search'>Search:</Label>
       <InputWrapper>
         <Input
+          id='search'
           type='text'
           name='search'
           onChange={onChange}
