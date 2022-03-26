@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from 'react'
+import { ChangeEvent, useCallback, useEffect, useRef } from 'react'
 
 // components
 import { FilterPanel } from './components/FilterPanel'
@@ -21,10 +21,12 @@ function App() {
   const [genderFilter, setGenderFilter] = useQueryString('gender', 'all')
   const [sortBy, setSortBy] = useQueryString('sortBy', 'name')
   const [sortDirection, setSortDirection] = useQueryString('sortDirection', '')
+  const [page, setPage] = useQueryString('page', '1')
 
-  const { error, isLoading, response } = useUsers(
+  const { error, hasMore, isLoading, response } = useUsers(
     searchKeyword,
     genderFilter,
+    page,
     sortBy,
     sortDirection
   )
@@ -53,6 +55,26 @@ function App() {
     if (error) alert(error)
   }, [error])
 
+  const observer = useRef<IntersectionObserver | null>()
+  const lastTableElementRef = useCallback(
+    (node) => {
+      if (isLoading) return
+      if (observer.current) {
+        observer.current.disconnect()
+      }
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((parseInt(page, 25) + 1).toString())
+        }
+      })
+
+      if (node) {
+        observer.current.observe(node)
+      }
+    },
+    [hasMore, isLoading, page, setPage]
+  )
+
   return (
     <div>
       <FilterPanel
@@ -79,18 +101,19 @@ function App() {
           </TableHead>
         </thead>
         <tbody>
-          {isLoading ? (
-            <h2>Loading...</h2>
-          ) : (
-            response?.map(({ name, email, gender, phone }) => (
-              <TableRow key={phone}>
-                <td>
-                  {name.title} {name.first} {name.last}
-                </td>
-                <td>{email}</td>
-                <td>{gender}</td>
-              </TableRow>
-            ))
+          {response?.map(({ name, email, gender, phone }) => (
+            <TableRow rowRef={lastTableElementRef} key={phone}>
+              <td>
+                {name.title} {name.first} {name.last}
+              </td>
+              <td>{email}</td>
+              <td>{gender}</td>
+            </TableRow>
+          ))}
+          {isLoading && (
+            <td>
+              <span>Loading...</span>
+            </td>
           )}
         </tbody>
       </Table>

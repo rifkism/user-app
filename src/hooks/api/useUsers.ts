@@ -10,12 +10,14 @@ import { useDebounce } from '../useDebounce'
 const useUsers = (
   keyword: string,
   genderFilter: string,
+  page: string,
   sortBy: string,
   sortDirection: string
 ) => {
-  const [response, setResponse] = useState<User[]>()
+  const [response, setResponse] = useState<User[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string>()
+  const [hasMore, setHasMore] = useState<boolean>()
 
   // Delay API call when user types in the search field
   const debouncedKeyword = useDebounce(keyword, 700)
@@ -26,12 +28,13 @@ const useUsers = (
       ...(genderFilter ? { gender: genderFilter } : {}),
       ...(sortBy ? { sortBy } : {}),
       ...(sortDirection ? { sortDirection } : {}),
+      ...(page ? { page } : {}),
     })
 
     const finalParams = params ? `?${params.toString()}` : ''
 
-    return `https://randomuser.me/api${finalParams}&results=15`
-  }, [genderFilter, debouncedKeyword, sortBy, sortDirection])
+    return `https://randomuser.me/api${finalParams}&results=5`
+  }, [genderFilter, debouncedKeyword, page, sortBy, sortDirection])
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -39,7 +42,8 @@ const useUsers = (
       try {
         const response = await axios.get(buildUrl())
         const { data: results } = response
-        setResponse(results.results)
+        setResponse((prevResults) => [...prevResults, ...results.results])
+        setHasMore(results.results?.length > 0)
         setIsLoading(false)
       } catch {
         setError('Something went wrong')
@@ -49,7 +53,7 @@ const useUsers = (
     fetchUsers()
   }, [buildUrl])
 
-  return { error, isLoading, response }
+  return { error, hasMore, isLoading, response }
 }
 
 export { useUsers }
