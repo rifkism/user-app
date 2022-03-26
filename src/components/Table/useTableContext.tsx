@@ -1,13 +1,13 @@
 import { createContext, FC, ReactNode, useContext } from 'react'
 
-interface ToggleState {
-  column: number
+interface SortState {
+  columnIndex: number
   sort: string
 }
 
 interface TableProviderValue {
-  onToggleSort: (column: number) => void
-  toggleSort: ToggleState
+  onToggleSort: (column: number, isSameColumn: boolean) => void
+  sortState: SortState
 }
 
 const TableContext = createContext<TableProviderValue | undefined>(undefined)
