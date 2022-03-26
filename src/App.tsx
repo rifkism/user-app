@@ -17,8 +17,15 @@ function App() {
     queryParams.get('keyword') || ''
   )
   const [genderFilter, setGenderFilter] = useQueryString('gender', 'all')
+  const [sortBy, setSortBy] = useQueryString('sortBy', 'name')
+  const [sortDirection, setSortDirection] = useQueryString('sortDirection', '')
 
-  const { error, isLoading, response } = useUsers(searchKeyword, genderFilter)
+  const { error, isLoading, response } = useUsers(
+    searchKeyword,
+    genderFilter,
+    sortBy,
+    sortDirection
+  )
 
   const handleSearchOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value)
@@ -26,6 +33,11 @@ function App() {
 
   const handleGenderFilterOnChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setGenderFilter(e.target.value)
+  }
+
+  const handleSortOnChange = (sortBy: string, sortDirection: string) => {
+    setSortBy(sortBy)
+    setSortDirection(sortDirection)
   }
 
   useEffect(() => {
@@ -39,11 +51,21 @@ function App() {
         onKeywordSearchChange={handleSearchOnChange}
         searchKeyword={searchKeyword}
       />
-      <Table>
+      <Table
+        onSort={handleSortOnChange}
+        sortBy={sortBy}
+        sortDirection={sortDirection}
+      >
         <thead>
-          <TableHead columnOrder={0}>Name</TableHead>
-          <TableHead columnOrder={1}>Email</TableHead>
-          <TableHead columnOrder={2}>Gender</TableHead>
+          <TableHead field='name' columnOrder={0}>
+            Name
+          </TableHead>
+          <TableHead field='email' columnOrder={1}>
+            Email
+          </TableHead>
+          <TableHead field='gender' columnOrder={2}>
+            Gender
+          </TableHead>
         </thead>
         <tbody>
           {isLoading ? (
