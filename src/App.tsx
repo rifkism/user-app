@@ -81,8 +81,8 @@ function App() {
           {isLoading ? (
             <h2>Loading...</h2>
           ) : (
-            response?.map(({ name, email, gender }) => (
-              <TableRow>
+            response?.map(({ name, email, gender, phone }) => (
+              <TableRow key={phone}>
                 <td>
                   {name.title} {name.first} {name.last}
                 </td>
