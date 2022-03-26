@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa'
 import styled from 'styled-components'
 
@@ -12,10 +13,11 @@ const Wrapper = styled.th`
 `
 
 interface TableHeadProps {
+  children: ReactNode
   columnOrder: number
 }
 
-const TableHead = ({ columnOrder }: TableHeadProps) => {
+const TableHead = ({ children, columnOrder }: TableHeadProps) => {
   const { onToggleSort, sortState } = useTableContext()
   const { sort, columnIndex } = sortState
 
@@ -26,7 +28,7 @@ const TableHead = ({ columnOrder }: TableHeadProps) => {
   return (
     <Wrapper>
       <div onClick={handleToggleSort}>
-        <span>test {columnOrder}</span>
+        {children}
         {columnOrder === columnIndex &&
           (sort === 'default' ? (
             <FaSort />
