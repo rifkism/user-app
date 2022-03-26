@@ -22,6 +22,7 @@ const useUsers = (keyword: string, genderFilter: string) => {
 
   useEffect(() => {
     const fetchUsers = async () => {
+      setIsLoading(true)
       try {
         const response = await axios.get(buildUrl())
         const { data: results } = response
