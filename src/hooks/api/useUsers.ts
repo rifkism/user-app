@@ -7,7 +7,12 @@ import { User } from './User'
 // hooks
 import { useDebounce } from '../useDebounce'
 
-const useUsers = (keyword: string, genderFilter: string) => {
+const useUsers = (
+  keyword: string,
+  genderFilter: string,
+  sortBy: string,
+  sortDirection: string
+) => {
   const [response, setResponse] = useState<User[]>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string>()
@@ -19,12 +24,14 @@ const useUsers = (keyword: string, genderFilter: string) => {
     const params = new URLSearchParams({
       ...(debouncedKeyword ? { keyword: debouncedKeyword } : {}),
       ...(genderFilter ? { gender: genderFilter } : {}),
+      ...(sortBy ? { sortBy } : {}),
+      ...(sortDirection ? { sortDirection } : {}),
     })
 
     const finalParams = params ? `?${params.toString()}` : ''
 
     return `https://randomuser.me/api${finalParams}&results=15`
-  }, [genderFilter, debouncedKeyword])
+  }, [genderFilter, debouncedKeyword, sortBy, sortDirection])
 
   useEffect(() => {
     const fetchUsers = async () => {
