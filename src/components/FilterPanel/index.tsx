@@ -1,22 +1,25 @@
+import { ChangeEvent } from 'react'
 import styled from 'styled-components'
-import { ChangeEvent, useState } from 'react'
 
 // components
-import { Select } from '../Select'
+import { Option, Select } from '../Select'
 import { TextInput } from '../TextInput'
 
 const FilterPanelWrapper = styled.div`
   display: flex;
   gap: 4px;
 `
+interface FilterPanelProps {
+  onGenderFilterChange: (e: ChangeEvent<HTMLSelectElement>) => void
+  onKeywordSearchChange: (e: ChangeEvent<HTMLInputElement>) => void
+  searchKeyword: string
+}
 
-const FilterPanel = () => {
-  const [searchKeyword, setSearchKeyword] = useState('')
-
-  const handleSearchOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value)
-  }
-
+const FilterPanel = ({
+  onGenderFilterChange,
+  onKeywordSearchChange,
+  searchKeyword,
+}: FilterPanelProps) => {
   return (
     <FilterPanelWrapper>
       <TextInput
@@ -25,13 +28,13 @@ const FilterPanel = () => {
         placeholder='Search...'
         id='search-input'
         type='select'
-        onChange={handleSearchOnChange}
+        onChange={onKeywordSearchChange}
         value={searchKeyword}
       />
-      <Select name='Gender' label='Gender'>
-        <option>All</option>
-        <option>Test 1</option>
-        <option>Test 2</option>
+      <Select name='Gender' label='Gender' onChange={onGenderFilterChange}>
+        <Option value='all'>All</Option>
+        <Option value='male'>Male</Option>
+        <Option value='female'>Female</Option>
       </Select>
     </FilterPanelWrapper>
   )
