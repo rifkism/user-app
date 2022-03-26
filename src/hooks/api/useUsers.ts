@@ -11,13 +11,13 @@ const useUsers = (keyword: string, genderFilter: string) => {
 
   const buildUrl = useCallback(() => {
     const params = new URLSearchParams({
-      keyword,
-      genderFilter,
+      ...(keyword ? { keyword } : {}),
+      ...(genderFilter ? { gender: genderFilter } : {}),
     })
 
     const finalParams = params ? `?${params.toString()}` : ''
 
-    return `https://randomuser.me/api${finalParams}`
+    return `https://randomuser.me/api${finalParams}&results=15`
   }, [genderFilter, keyword])
 
   useEffect(() => {
