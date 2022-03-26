@@ -2,13 +2,13 @@ import { FC, ReactNode, useState } from 'react'
 import styled from 'styled-components'
 import { TableProvider } from './useTableContext'
 
-interface TableProps {
-  children: ReactNode
-}
-
 interface ToggleState {
-  columnIndex: number
-  sort: string
+  sortBy: string
+  sortDirection: string
+}
+interface TableProps extends ToggleState {
+  children: ReactNode
+  onSort: (sortBy: string, sortDirection: string) => void
 }
 
 const StyledTable = styled.table`
@@ -21,21 +21,15 @@ const StyledTable = styled.table`
   }
 `
 
-const Table: FC<TableProps> = ({ children }) => {
-  const [sortState, setToggleSort] = useState<ToggleState>({
-    columnIndex: 0,
-    sort: 'default',
-  })
-
-  const onToggleSort = (column: number, isSameColumn: boolean) => {
-    const { sort } = sortState
+const Table: FC<TableProps> = ({ children, onSort, sortBy, sortDirection }) => {
+  const onToggleSort = (field: string, isSameColumn: boolean) => {
     let nextSort = ''
 
-    if (sort === 'default') {
+    if (sortDirection === 'default') {
       nextSort = 'up'
-    } else if (sort === 'up') {
+    } else if (sortDirection === 'up') {
       nextSort = 'down'
-    } else if (sort === 'down') {
+    } else if (sortDirection === 'down') {
       nextSort = 'default'
     }
 
@@ -43,8 +37,10 @@ const Table: FC<TableProps> = ({ children }) => {
       nextSort = 'default'
     }
 
-    setToggleSort({ columnIndex: column, sort: nextSort })
+    onSort(field, nextSort)
   }
+
+  const sortState = { sortBy, sortDirection }
 
   return (
     <TableProvider value={{ onToggleSort, sortState }}>

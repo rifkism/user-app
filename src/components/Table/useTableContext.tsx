@@ -1,12 +1,12 @@
 import { createContext, FC, ReactNode, useContext } from 'react'
 
 interface SortState {
-  columnIndex: number
-  sort: string
+  sortBy: string
+  sortDirection: string
 }
 
 interface TableProviderValue {
-  onToggleSort: (column: number, isSameColumn: boolean) => void
+  onToggleSort: (field: string, isSameColumn: boolean) => void
   sortState: SortState
 }
 

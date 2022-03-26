@@ -15,24 +15,25 @@ const Wrapper = styled.th`
 interface TableHeadProps {
   children: ReactNode
   columnOrder: number
+  field: string
 }
 
-const TableHead = ({ children, columnOrder }: TableHeadProps) => {
+const TableHead = ({ children, columnOrder, field }: TableHeadProps) => {
   const { onToggleSort, sortState } = useTableContext()
-  const { sort, columnIndex } = sortState
+  const { sortDirection } = sortState
 
   const handleToggleSort = () => {
-    onToggleSort(columnOrder, columnOrder === columnIndex)
+    onToggleSort(field, field === sortState.sortBy)
   }
 
   return (
     <Wrapper>
       <div onClick={handleToggleSort}>
         {children}
-        {columnOrder === columnIndex &&
-          (sort === 'default' ? (
+        {field === sortState.sortBy &&
+          (sortDirection === 'default' ? (
             <FaSort />
-          ) : sort === 'up' ? (
+          ) : sortDirection === 'up' ? (
             <FaSortUp />
           ) : (
             <FaSortDown />
