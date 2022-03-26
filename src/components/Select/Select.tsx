@@ -32,8 +32,10 @@ const Select: FC<SelectProps> = ({ value, label, name, onChange, options }) => {
       <Label htmlFor={name}>{label}</Label>
       <div>
         <StyledSelect onChange={onChange} id={name} name={name} value={value}>
-          {options?.map(({ label, value }) => (
-            <Option value={value}>{label}</Option>
+          {options?.map(({ label, value }, key) => (
+            <Option key={key} value={value}>
+              {label}
+            </Option>
           ))}
         </StyledSelect>
       </div>
