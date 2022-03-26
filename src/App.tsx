@@ -12,6 +12,8 @@ import { useUsers } from './hooks/api/useUsers'
 
 function App() {
   const queryParams = new URLSearchParams(window.location.search)
+
+  // initialize state for params
   const [searchKeyword, setSearchKeyword] = useQueryString(
     'keyword',
     queryParams.get('keyword') || ''
@@ -26,6 +28,13 @@ function App() {
     sortBy,
     sortDirection
   )
+
+  const handleResetParams = () => {
+    setSearchKeyword('')
+    setGenderFilter('all')
+    setSortBy('name')
+    setSortDirection('')
+  }
 
   const handleSearchOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value)
@@ -50,6 +59,7 @@ function App() {
         onGenderFilterChange={handleGenderFilterOnChange}
         onKeywordSearchChange={handleSearchOnChange}
         searchKeyword={searchKeyword}
+        onReset={handleResetParams}
       />
       <Table
         onSort={handleSortOnChange}

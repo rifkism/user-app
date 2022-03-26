@@ -12,12 +12,14 @@ const FilterPanelWrapper = styled.div`
 interface FilterPanelProps {
   onGenderFilterChange: (e: ChangeEvent<HTMLSelectElement>) => void
   onKeywordSearchChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onReset: () => void
   searchKeyword: string
 }
 
 const FilterPanel = ({
   onGenderFilterChange,
   onKeywordSearchChange,
+  onReset,
   searchKeyword,
 }: FilterPanelProps) => {
   return (
@@ -36,6 +38,7 @@ const FilterPanel = ({
         <Option value='male'>Male</Option>
         <Option value='female'>Female</Option>
       </Select>
+      <button onClick={onReset}>Reset</button>
     </FilterPanelWrapper>
   )
 }
