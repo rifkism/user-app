@@ -56,6 +56,7 @@ function App() {
   return (
     <div>
       <FilterPanel
+        genderFilter={genderFilter}
         onGenderFilterChange={handleGenderFilterOnChange}
         onKeywordSearchChange={handleSearchOnChange}
         searchKeyword={searchKeyword}

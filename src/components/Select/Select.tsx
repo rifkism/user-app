@@ -1,11 +1,18 @@
-import { ChangeEvent, FC, ReactNode } from 'react'
+import { ChangeEvent, FC } from 'react'
 import styled from 'styled-components'
 
-interface InputProps {
-  children: ReactNode
+// components
+import { Option } from './Option'
+interface Options {
+  label: string
+  value: string
+}
+interface SelectProps {
+  value: string
   label: string
   name: string
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void
+  options: Options[]
 }
 
 const Label = styled.label`
@@ -19,13 +26,15 @@ const StyledSelect = styled.select<{
   height: 34px;
 `
 
-const Select: FC<InputProps> = ({ children, label, name, onChange }) => {
+const Select: FC<SelectProps> = ({ value, label, name, onChange, options }) => {
   return (
     <div>
       <Label htmlFor={name}>{label}</Label>
       <div>
-        <StyledSelect onChange={onChange} id={name} name={name}>
-          {children}
+        <StyledSelect onChange={onChange} id={name} name={name} value={value}>
+          {options?.map(({ label, value }) => (
+            <Option value={value}>{label}</Option>
+          ))}
         </StyledSelect>
       </div>
     </div>
