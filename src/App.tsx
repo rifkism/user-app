@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 
 // components
@@ -11,7 +11,7 @@ import { Label as SelectInputLabel } from './components/Select/Select'
 
 // hooks
 import { useDebounce } from './hooks/useDebounce'
-import { useQueryString } from './hooks/useQueryString'
+import { useFilterPanel } from './hooks/useFilterPanel'
 import { useUsers } from './hooks/api/useUsers'
 
 const Wrapper = styled.div`
@@ -28,23 +28,20 @@ const Wrapper = styled.div`
 function App() {
   const queryParams = new URLSearchParams(window.location.search)
 
-  // initialize state for params
-  const [searchKeyword, setSearchKeyword] = useQueryString(
-    'keyword',
-    queryParams.get('keyword') || ''
-  )
-  const [genderFilter, setGenderFilter] = useQueryString('gender', 'all')
-  const [sortBy, setSortBy] = useQueryString('sortBy', 'name')
-  const [sortDirection, setSortDirection] = useQueryString('sortDirection', '')
-  const [page, setPage] = useQueryString('page', '1')
-
-  const handleResetParams = () => {
-    setSearchKeyword('')
-    setGenderFilter('all')
-    setPage('1')
-    setSortBy('name')
-    setSortDirection('')
-  }
+  const {
+    searchKeyword,
+    genderFilter,
+    page,
+    sortBy,
+    sortDirection,
+    setPage,
+    handleGenderFilterOnChange,
+    handleSearchOnChange,
+    handleResetParams,
+    handleNextPageClick,
+    handlePreviousPageClick,
+    handleSortOnChange,
+  } = useFilterPanel(queryParams)
 
   const debouncedKeyword = useDebounce(searchKeyword, 700)
   const isNewKeywordSearch = debouncedKeyword !== searchKeyword
@@ -55,7 +52,7 @@ function App() {
     }
   }, [isNewKeywordSearch, setPage])
 
-  const { error, isLoading, response } = useUsers(
+  const { error, isLoading, users } = useUsers(
     debouncedKeyword,
     genderFilter,
     page,
@@ -67,29 +64,6 @@ function App() {
   useEffect(() => {
     if (error) alert(error)
   }, [error])
-
-  const handleSearchOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value)
-  }
-
-  const handleGenderFilterOnChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setGenderFilter(e.target.value)
-    setPage('1')
-  }
-
-  const handleSortOnChange = (sortBy: string, sortDirection: string) => {
-    setPage('1')
-    setSortBy(sortBy)
-    setSortDirection(sortDirection)
-  }
-
-  const handleNextPageClick = () => {
-    setPage((parseInt(page) + 1).toString())
-  }
-
-  const handlePreviousPageClick = () => {
-    setPage((parseInt(page) - 1).toString())
-  }
 
   return (
     <Wrapper>
@@ -109,20 +83,14 @@ function App() {
       >
         <thead>
           <TableRow>
-            <TableHead field='name' columnOrder={0}>
-              Name
-            </TableHead>
-            <TableHead field='email' columnOrder={1}>
-              Email
-            </TableHead>
-            <TableHead field='gender' columnOrder={2}>
-              Gender
-            </TableHead>
+            <TableHead field='name'>Name</TableHead>
+            <TableHead field='email'>Email</TableHead>
+            <TableHead field='gender'>Gender</TableHead>
           </TableRow>
         </thead>
         <tbody>
           {!isLoading &&
-            response?.map(({ name, email, gender, phone }) => (
+            users?.map(({ name, email, gender, phone }) => (
               <TableRow key={phone}>
                 <td>
                   {name.title} {name.first} {name.last}
