@@ -17,6 +17,8 @@ const StyledTable = styled.table`
   th,
   td {
     padding: 8px;
+    text-align: left;
+    min-width: 200px;
   }
 `
 
@@ -26,10 +28,10 @@ const Table: FC<TableProps> = ({ children, onSort, sortBy, sortDirection }) => {
     let nextSort = ''
 
     if (sortDirection === 'default') {
-      nextSort = 'up'
-    } else if (sortDirection === 'up') {
-      nextSort = 'down'
-    } else if (sortDirection === 'down') {
+      nextSort = 'asc'
+    } else if (sortDirection === 'asc') {
+      nextSort = 'desc'
+    } else if (sortDirection === 'desc') {
       nextSort = 'default'
     }
 
