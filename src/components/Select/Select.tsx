@@ -15,7 +15,7 @@ interface SelectProps {
   options: Options[]
 }
 
-const Label = styled.label`
+export const Label = styled.label`
   display: block;
   margin-bottom: 4px;
 `

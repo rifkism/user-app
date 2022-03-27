@@ -9,7 +9,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value?: string
 }
 
-const Label = styled.label<{ htmlFor: string }>`
+export const Label = styled.label<{ htmlFor: string }>`
   display: block;
   margin-bottom: 4px;
 `

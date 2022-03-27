@@ -5,9 +5,12 @@ import styled from 'styled-components'
 import { Select } from '../Select'
 import { TextInput } from '../TextInput'
 
-const FilterPanelWrapper = styled.div`
+export const FilterPanelWrapper = styled.div`
+  background: white;
   display: flex;
   gap: 4px;
+  position: fixed;
+  width: 100%;
 `
 interface FilterPanelProps {
   genderFilter: string
