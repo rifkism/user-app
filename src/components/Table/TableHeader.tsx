@@ -14,11 +14,10 @@ const Wrapper = styled.th`
 
 interface TableHeadProps {
   children: ReactNode
-  columnOrder: number
   field: string
 }
 
-const TableHead = ({ children, columnOrder, field }: TableHeadProps) => {
+const TableHead = ({ children, field }: TableHeadProps) => {
   const { onToggleSort, sortState } = useTableContext()
   const { sortDirection } = sortState
 
