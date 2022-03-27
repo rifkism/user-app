@@ -1,14 +1,29 @@
-import { ChangeEvent, useCallback, useEffect, useRef } from 'react'
+import { ChangeEvent, useEffect } from 'react'
+import styled from 'styled-components'
 
 // components
-import { FilterPanel } from './components/FilterPanel'
+import { FilterPanel, FilterPanelWrapper } from './components/FilterPanel'
 import { Table } from './components/Table/Table'
 import { TableHead } from './components/Table/TableHeader'
 import { TableRow } from './components/Table/TableRow'
+import { Label as TextInputLabel } from './components/TextInput'
+import { Label as SelectInputLabel } from './components/Select/Select'
 
 // hooks
+import { useDebounce } from './hooks/useDebounce'
 import { useQueryString } from './hooks/useQueryString'
 import { useUsers } from './hooks/api/useUsers'
+
+const Wrapper = styled.div`
+  ${FilterPanelWrapper} {
+    background: #35405a;
+    padding: 32px;
+  }
+
+  ${TextInputLabel}, ${SelectInputLabel} {
+    color: white;
+  }
+`
 
 function App() {
   const queryParams = new URLSearchParams(window.location.search)
@@ -23,20 +38,23 @@ function App() {
   const [sortDirection, setSortDirection] = useQueryString('sortDirection', '')
   const [page, setPage] = useQueryString('page', '1')
 
-  const { error, hasMore, isLoading, response } = useUsers(
-    searchKeyword,
+  const handleResetParams = () => {
+    setSearchKeyword('')
+    setGenderFilter('all')
+    setPage('1')
+    setSortBy('name')
+    setSortDirection('')
+  }
+
+  const debouncedKeyword = useDebounce(searchKeyword, 700)
+
+  const { error, isLoading, response } = useUsers(
+    debouncedKeyword,
     genderFilter,
     page,
     sortBy,
     sortDirection
   )
-
-  const handleResetParams = () => {
-    setSearchKeyword('')
-    setGenderFilter('all')
-    setSortBy('name')
-    setSortDirection('')
-  }
 
   const handleSearchOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value)
@@ -55,28 +73,8 @@ function App() {
     if (error) alert(error)
   }, [error])
 
-  const observer = useRef<IntersectionObserver | null>()
-  const lastTableElementRef = useCallback(
-    (node) => {
-      if (isLoading) return
-      if (observer.current) {
-        observer.current.disconnect()
-      }
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPage((parseInt(page, 25) + 1).toString())
-        }
-      })
-
-      if (node) {
-        observer.current.observe(node)
-      }
-    },
-    [hasMore, isLoading, page, setPage]
-  )
-
   return (
-    <div>
+    <Wrapper>
       <FilterPanel
         genderFilter={genderFilter}
         onGenderFilterChange={handleGenderFilterOnChange}
@@ -101,8 +99,9 @@ function App() {
           </TableHead>
         </thead>
         <tbody>
-          {response?.map(({ name, email, gender, phone }) => (
-            <TableRow rowRef={lastTableElementRef} key={phone}>
+          {response?.map(({ name, email, gender, phone }, key) => (
+            <TableRow key={phone}>
+              <td>{key + 1}</td>
               <td>
                 {name.title} {name.first} {name.last}
               </td>
@@ -117,7 +116,7 @@ function App() {
           )}
         </tbody>
       </Table>
-    </div>
+    </Wrapper>
   )
 }
 
