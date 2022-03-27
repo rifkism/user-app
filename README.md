@@ -1,4 +1,5 @@
 # React User App
+A React app displaying data from https://randomuser.me/
 
 ### Prerequisites
 
