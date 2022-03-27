@@ -55,7 +55,7 @@ const FilterPanel = ({
         name='search'
         placeholder='Search...'
         id='search-input'
-        type='select'
+        type='input'
         onChange={onKeywordSearchChange}
         value={searchKeyword}
       />
@@ -67,7 +67,9 @@ const FilterPanel = ({
         value={genderFilter}
       />
       <div className='reset-button'>
-        <button onClick={onReset}>Reset</button>
+        <button name='reset' onClick={onReset}>
+          Reset
+        </button>
       </div>
       <Pagination
         onNextPageClick={onNextPageClick}
