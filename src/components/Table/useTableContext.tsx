@@ -24,6 +24,7 @@ const TableProvider: FC<TableProviderProps> = ({ children, value }) => {
 const useTableContext = () => {
   const context = useContext(TableContext)
 
+  /* istanbul ignore next */
   if (context === undefined) {
     throw new Error('useTableContext must be within a TableProvider')
   }

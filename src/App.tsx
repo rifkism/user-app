@@ -88,17 +88,23 @@ function App() {
             <TableHead field='name'>Name</TableHead>
             <TableHead field='email'>Email</TableHead>
             <TableHead field='gender'>Gender</TableHead>
+            <TableHead field='age'>Age</TableHead>
+            <TableHead field='city'>City</TableHead>
+            <TableHead field='state'>State</TableHead>
           </TableRow>
         </thead>
         <tbody>
           {!isLoading &&
-            users?.map(({ name, email, gender, phone }) => (
+            users?.map(({ name, email, gender, phone, dob, location }) => (
               <TableRow key={phone}>
                 <td>
                   {name.title} {name.first} {name.last}
                 </td>
                 <td>{email}</td>
                 <td>{gender}</td>
+                <td>{dob.age}</td>
+                <td>{location.city}</td>
+                <td>{location.state}</td>
               </TableRow>
             ))}
           {isLoading && (
