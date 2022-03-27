@@ -12,6 +12,16 @@ export const FilterPanelWrapper = styled.div`
   gap: 4px;
   position: fixed;
   width: 100%;
+
+  div.reset-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+
+    > button {
+      height: 36px;
+    }
+  }
 `
 interface FilterPanelProps {
   genderFilter: string
@@ -56,7 +66,9 @@ const FilterPanel = ({
         options={genderOptions}
         value={genderFilter}
       />
-      <button onClick={onReset}>Reset</button>
+      <div className='reset-button'>
+        <button onClick={onReset}>Reset</button>
+      </div>
       <Pagination
         onNextPageClick={onNextPageClick}
         onPreviousPageClick={onPreviousPageClick}

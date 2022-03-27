@@ -4,11 +4,16 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 const Wrapper = styled.div`
   display: flex;
   justify-content: end;
-  padding: 16px;
+  padding: 16px 16px 0;
 
   button {
-    height: 100%;
+    height: 36px;
   }
+`
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: end;
 `
 
 interface PaginationProps {
@@ -22,12 +27,16 @@ const Pagination = ({
 }: PaginationProps) => {
   return (
     <Wrapper>
-      <button onClick={onPreviousPageClick}>
-        <FaChevronLeft /> Previous
-      </button>
-      <button onClick={onNextPageClick}>
-        <FaChevronRight /> Next
-      </button>
+      <ButtonWrapper>
+        <button onClick={onPreviousPageClick}>
+          <FaChevronLeft /> Previous
+        </button>
+      </ButtonWrapper>
+      <ButtonWrapper>
+        <button onClick={onNextPageClick}>
+          <FaChevronRight /> Next
+        </button>
+      </ButtonWrapper>
     </Wrapper>
   )
 }

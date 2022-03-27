@@ -23,12 +23,18 @@ export const Label = styled.label`
 const StyledSelect = styled.select<{
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }>`
-  height: 34px;
+  height: 36px;
+`
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 const Select: FC<SelectProps> = ({ value, label, name, onChange, options }) => {
   return (
-    <div>
+    <Wrapper>
       <Label htmlFor={name}>{label}</Label>
       <div>
         <StyledSelect onChange={onChange} id={name} name={name} value={value}>
@@ -39,7 +45,7 @@ const Select: FC<SelectProps> = ({ value, label, name, onChange, options }) => {
           ))}
         </StyledSelect>
       </div>
-    </div>
+    </Wrapper>
   )
 }
 

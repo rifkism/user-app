@@ -15,10 +15,15 @@ export const Label = styled.label<{ htmlFor: string }>`
 `
 
 const StyledInput = styled.input`
-  border: 1px solid #cbcbcb;
   display: block;
   height: 32px;
   padding: 0 8px;
+`
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 const TextInput: FC<InputProps> = ({
@@ -30,7 +35,7 @@ const TextInput: FC<InputProps> = ({
   ...rest
 }) => {
   return (
-    <div>
+    <Wrapper>
       <Label htmlFor={name}>{label}</Label>
       <StyledInput
         id={name}
@@ -41,7 +46,7 @@ const TextInput: FC<InputProps> = ({
         value={value}
         {...rest}
       />
-    </div>
+    </Wrapper>
   )
 }
 
