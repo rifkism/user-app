@@ -12,8 +12,7 @@ interface TableProps extends ToggleState {
 }
 
 const StyledTable = styled.table`
-  border: 1px solid grey;
-  padding: 4px;
+  padding: 128px 16px 0;
 
   th,
   td {
