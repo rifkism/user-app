@@ -7,6 +7,7 @@ const Wrapper = styled.div`
   padding: 16px 16px 0;
 
   button {
+    cursor: pointer;
     height: 36px;
   }
 `

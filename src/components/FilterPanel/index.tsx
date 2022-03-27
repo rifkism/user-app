@@ -19,6 +19,7 @@ export const FilterPanelWrapper = styled.div`
     justify-content: end;
 
     > button {
+      cursor: pointer;
       height: 36px;
     }
   }

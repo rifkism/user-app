@@ -23,6 +23,7 @@ export const Label = styled.label`
 const StyledSelect = styled.select<{
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }>`
+  cursor: pointer;
   height: 36px;
 `
 
