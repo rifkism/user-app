@@ -31,7 +31,7 @@ const TableHead = ({ children, columnOrder, field }: TableHeadProps) => {
       <div onClick={handleToggleSort}>
         {children}
         {field === sortState.sortBy &&
-          (sortDirection === 'default' ? (
+          (sortDirection === 'default' || sortDirection === '' ? (
             <FaSort />
           ) : sortDirection === 'up' ? (
             <FaSortUp />
