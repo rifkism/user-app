@@ -108,15 +108,17 @@ function App() {
         sortDirection={sortDirection}
       >
         <thead>
-          <TableHead field='name' columnOrder={0}>
-            Name
-          </TableHead>
-          <TableHead field='email' columnOrder={1}>
-            Email
-          </TableHead>
-          <TableHead field='gender' columnOrder={2}>
-            Gender
-          </TableHead>
+          <TableRow>
+            <TableHead field='name' columnOrder={0}>
+              Name
+            </TableHead>
+            <TableHead field='email' columnOrder={1}>
+              Email
+            </TableHead>
+            <TableHead field='gender' columnOrder={2}>
+              Gender
+            </TableHead>
+          </TableRow>
         </thead>
         <tbody>
           {!isLoading &&
@@ -130,9 +132,9 @@ function App() {
               </TableRow>
             ))}
           {isLoading && (
-            <td>
-              <span>Loading...</span>
-            </td>
+            <TableRow>
+              <td>Loading...</td>
+            </TableRow>
           )}
         </tbody>
       </Table>
