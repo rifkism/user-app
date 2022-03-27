@@ -1,5 +1,4 @@
-import { lazy, Suspense } from 'react'
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import styled from 'styled-components'
 
 // components
@@ -14,6 +13,7 @@ import { useDebounce } from './hooks/useDebounce'
 import { useFilterPanel } from './hooks/useFilterPanel'
 import { useUsers } from './hooks/api/useUsers'
 
+// lazy loaded components
 const FilterPanel = lazy(() => import('./components/FilterPanel'))
 const Table = lazy(() => import('./components/Table/Table'))
 
@@ -50,7 +50,6 @@ function App() {
   const isNewKeywordSearch = debouncedKeyword !== searchKeyword
 
   useEffect(() => {
-    /* istanbul ignore next */
     if (isNewKeywordSearch) {
       setPage('1')
     }
