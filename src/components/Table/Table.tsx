@@ -21,6 +21,7 @@ const StyledTable = styled.table`
 `
 
 const Table: FC<TableProps> = ({ children, onSort, sortBy, sortDirection }) => {
+  /* istanbul ignore next */
   const onToggleSort = (field: string, isSameColumn: boolean) => {
     let nextSort = ''
 

@@ -47,6 +47,7 @@ function App() {
   const isNewKeywordSearch = debouncedKeyword !== searchKeyword
 
   useEffect(() => {
+    /* istanbul ignore next */
     if (isNewKeywordSearch) {
       setPage('1')
     }
@@ -62,6 +63,7 @@ function App() {
   )
 
   useEffect(() => {
+    /* istanbul ignore next */
     if (error) alert(error)
   }, [error])
 

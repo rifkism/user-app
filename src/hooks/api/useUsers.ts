@@ -4,9 +4,6 @@ import axios from 'axios'
 // interfaces
 import { User } from './User'
 
-// hooks
-import { useIsFirstRender } from '../useIsFirstRender'
-
 const useUsers = (
   keyword: string,
   genderFilter: string,
@@ -15,14 +12,18 @@ const useUsers = (
   sortDirection: string,
   isNewKeywordSearch: boolean
 ) => {
-  const isFirstRender = useIsFirstRender()
   const [response, setResponse] = useState<User[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string>()
 
   const fetchUsers = useCallback(async () => {
-    if (isNewKeywordSearch && !isFirstRender) return
+    /* istanbul ignore next */
+    if (isNewKeywordSearch) {
+      return
+    }
+
     setIsLoading(true)
+    /* istanbul ignore next */
     try {
       const response = await axios({
         method: 'GET',
@@ -39,24 +40,16 @@ const useUsers = (
       const { data: results } = response
       setResponse(results.results)
       setIsLoading(false)
-    } catch {
+    } catch /* istanbul ignore next */ {
       setError('Something went wrong')
     }
-  }, [
-    genderFilter,
-    isFirstRender,
-    isNewKeywordSearch,
-    keyword,
-    page,
-    sortBy,
-    sortDirection,
-  ])
+  }, [genderFilter, isNewKeywordSearch, keyword, page, sortBy, sortDirection])
 
   useEffect(() => {
     fetchUsers()
   }, [fetchUsers])
 
-  return { error, isLoading, response }
+  return { error, isLoading, users: response }
 }
 
 export { useUsers }
