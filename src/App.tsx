@@ -64,22 +64,24 @@ function App() {
     isNewKeywordSearch
   )
 
+  useEffect(() => {
+    if (error) alert(error)
+  }, [error])
+
   const handleSearchOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value)
   }
 
   const handleGenderFilterOnChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setGenderFilter(e.target.value)
+    setPage('1')
   }
 
   const handleSortOnChange = (sortBy: string, sortDirection: string) => {
+    setPage('1')
     setSortBy(sortBy)
     setSortDirection(sortDirection)
   }
-
-  useEffect(() => {
-    if (error) alert(error)
-  }, [error])
 
   const handleNextPageClick = () => {
     setPage((parseInt(page) + 1).toString())
