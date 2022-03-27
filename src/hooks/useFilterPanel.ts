@@ -40,6 +40,7 @@ const useFilterPanel = (queryParams: URLSearchParams) => {
   }
 
   const handlePreviousPageClick = () => {
+    if (page === '1') return
     setPage((parseInt(page) - 1).toString())
   }
 
