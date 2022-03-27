@@ -13,7 +13,6 @@ import { Label as SelectInputLabel } from './components/Select/Select'
 import { useDebounce } from './hooks/useDebounce'
 import { useQueryString } from './hooks/useQueryString'
 import { useUsers } from './hooks/api/useUsers'
-import { usePrevious } from './hooks/usePrevious'
 
 const Wrapper = styled.div`
   ${FilterPanelWrapper} {
@@ -48,11 +47,7 @@ function App() {
   }
 
   const debouncedKeyword = useDebounce(searchKeyword, 700)
-
-  const prevKeyword = usePrevious(debouncedKeyword)
-
-  const isNewKeywordSearch =
-    prevKeyword !== debouncedKeyword && searchKeyword !== ''
+  const isNewKeywordSearch = debouncedKeyword !== searchKeyword
 
   useEffect(() => {
     if (isNewKeywordSearch) {
