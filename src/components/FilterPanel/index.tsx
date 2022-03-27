@@ -2,6 +2,7 @@ import { ChangeEvent } from 'react'
 import styled from 'styled-components'
 
 // components
+import { Pagination } from '../Pagination'
 import { Select } from '../Select'
 import { TextInput } from '../TextInput'
 
@@ -16,6 +17,8 @@ interface FilterPanelProps {
   genderFilter: string
   onGenderFilterChange: (e: ChangeEvent<HTMLSelectElement>) => void
   onKeywordSearchChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onNextPageClick: () => void
+  onPreviousPageClick: () => void
   onReset: () => void
   searchKeyword: string
 }
@@ -30,6 +33,8 @@ const FilterPanel = ({
   genderFilter,
   onGenderFilterChange,
   onKeywordSearchChange,
+  onNextPageClick,
+  onPreviousPageClick,
   onReset,
   searchKeyword,
 }: FilterPanelProps) => {
@@ -52,6 +57,10 @@ const FilterPanel = ({
         value={genderFilter}
       />
       <button onClick={onReset}>Reset</button>
+      <Pagination
+        onNextPageClick={onNextPageClick}
+        onPreviousPageClick={onPreviousPageClick}
+      />
     </FilterPanelWrapper>
   )
 }

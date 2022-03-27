@@ -9,14 +9,15 @@ const useUsers = (
   genderFilter: string,
   page: string,
   sortBy: string,
-  sortDirection: string
+  sortDirection: string,
+  isNewKeywordSearch: boolean
 ) => {
   const [response, setResponse] = useState<User[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<string>()
-  const [hasMore, setHasMore] = useState<boolean>()
 
   const fetchUsers = useCallback(async () => {
+    if (isNewKeywordSearch) return
     setIsLoading(true)
     try {
       const response = await axios({
@@ -32,22 +33,18 @@ const useUsers = (
         url: 'https://randomuser.me/api',
       })
       const { data: results } = response
-      setResponse((prevResults) => [
-        ...(parseInt(page) > 1 ? prevResults : []),
-        ...results.results,
-      ])
-      setHasMore(results.results?.length > 0)
+      setResponse(results.results)
       setIsLoading(false)
     } catch {
       setError('Something went wrong')
     }
-  }, [genderFilter, keyword, page, sortBy, sortDirection])
+  }, [genderFilter, isNewKeywordSearch, keyword, page, sortBy, sortDirection])
 
   useEffect(() => {
     fetchUsers()
   }, [fetchUsers])
 
-  return { error, hasMore, isLoading, response }
+  return { error, isLoading, response }
 }
 
 export { useUsers }

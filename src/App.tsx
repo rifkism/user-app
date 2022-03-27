@@ -13,6 +13,7 @@ import { Label as SelectInputLabel } from './components/Select/Select'
 import { useDebounce } from './hooks/useDebounce'
 import { useQueryString } from './hooks/useQueryString'
 import { useUsers } from './hooks/api/useUsers'
+import { usePrevious } from './hooks/usePrevious'
 
 const Wrapper = styled.div`
   ${FilterPanelWrapper} {
@@ -48,12 +49,24 @@ function App() {
 
   const debouncedKeyword = useDebounce(searchKeyword, 700)
 
+  const prevKeyword = usePrevious(debouncedKeyword)
+
+  const isNewKeywordSearch =
+    prevKeyword !== debouncedKeyword && searchKeyword !== ''
+
+  useEffect(() => {
+    if (isNewKeywordSearch) {
+      setPage('1')
+    }
+  }, [isNewKeywordSearch, setPage])
+
   const { error, isLoading, response } = useUsers(
     debouncedKeyword,
     genderFilter,
     page,
     sortBy,
-    sortDirection
+    sortDirection,
+    isNewKeywordSearch
   )
 
   const handleSearchOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -73,6 +86,14 @@ function App() {
     if (error) alert(error)
   }, [error])
 
+  const handleNextPageClick = () => {
+    setPage((parseInt(page) + 1).toString())
+  }
+
+  const handlePreviousPageClick = () => {
+    setPage((parseInt(page) - 1).toString())
+  }
+
   return (
     <Wrapper>
       <FilterPanel
@@ -81,6 +102,8 @@ function App() {
         onKeywordSearchChange={handleSearchOnChange}
         searchKeyword={searchKeyword}
         onReset={handleResetParams}
+        onNextPageClick={handleNextPageClick}
+        onPreviousPageClick={handlePreviousPageClick}
       />
       <Table
         onSort={handleSortOnChange}
@@ -99,16 +122,16 @@ function App() {
           </TableHead>
         </thead>
         <tbody>
-          {response?.map(({ name, email, gender, phone }, key) => (
-            <TableRow key={phone}>
-              <td>{key + 1}</td>
-              <td>
-                {name.title} {name.first} {name.last}
-              </td>
-              <td>{email}</td>
-              <td>{gender}</td>
-            </TableRow>
-          ))}
+          {!isLoading &&
+            response?.map(({ name, email, gender, phone }) => (
+              <TableRow key={phone}>
+                <td>
+                  {name.title} {name.first} {name.last}
+                </td>
+                <td>{email}</td>
+                <td>{gender}</td>
+              </TableRow>
+            ))}
           {isLoading && (
             <td>
               <span>Loading...</span>
