@@ -7,7 +7,9 @@ const Wrapper = styled.div`
   padding: 16px 16px 0;
 
   button {
+    align-items: center;
     cursor: pointer;
+    display: flex;
     height: 36px;
   }
 `
@@ -35,7 +37,8 @@ const Pagination = ({
       </ButtonWrapper>
       <ButtonWrapper>
         <button onClick={onNextPageClick}>
-          <FaChevronRight /> Next
+          Next
+          <FaChevronRight />
         </button>
       </ButtonWrapper>
     </Wrapper>
