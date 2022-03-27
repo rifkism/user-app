@@ -27,7 +27,7 @@ const Table: FC<TableProps> = ({ children, onSort, sortBy, sortDirection }) => {
   const onToggleSort = (field: string, isSameColumn: boolean) => {
     let nextSort = ''
 
-    if (sortDirection === 'default') {
+    if (sortDirection === 'default' || sortDirection === '') {
       nextSort = 'asc'
     } else if (sortDirection === 'asc') {
       nextSort = 'desc'
