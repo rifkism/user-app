@@ -1,4 +1,4 @@
-## User App
+# React User App
 
 ### Prerequisites
 
@@ -39,3 +39,9 @@ Please install the following:
 ### Performance Optimzations Used
 
 1. Use `React lazy` feature for lazy loading components
+<img width="1772" alt="Screen Shot 2022-03-27 at 21 04 28" src="https://user-images.githubusercontent.com/19601243/160285336-1da6b4ae-4d85-4e31-9dbd-2028f0b71733.png">
+<img width="876" alt="Screen Shot 2022-03-27 at 21 01 33" src="https://user-images.githubusercontent.com/19601243/160285258-f1fb9717-481a-47bf-84f1-fbc7b26da832.png">   
+
+
+
+
