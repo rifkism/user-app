@@ -9,6 +9,7 @@ const useIsFirstRender = (): boolean => {
     return true
   }
 
+  /* istanbul ignore next */
   return isFirst.current
 }
 
