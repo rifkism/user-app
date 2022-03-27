@@ -1,8 +1,7 @@
-import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/react'
 
 // components
-import { FilterPanel } from '../'
+import FilterPanel from '../'
 
 test('Should render FilterPanel correctly', () => {
   render(

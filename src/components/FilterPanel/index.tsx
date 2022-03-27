@@ -80,4 +80,4 @@ const FilterPanel = ({
   )
 }
 
-export { FilterPanel }
+export default FilterPanel

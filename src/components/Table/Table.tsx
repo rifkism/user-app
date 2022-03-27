@@ -51,4 +51,4 @@ const Table: FC<TableProps> = ({ children, onSort, sortBy, sortDirection }) => {
   )
 }
 
-export { Table }
+export default Table

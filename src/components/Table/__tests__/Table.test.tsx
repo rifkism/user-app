@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 
-import { Table } from '../Table'
+import Table from '../Table'
 import { TableHead } from '../TableHeader'
 import { TableRow } from '../TableRow'
 
