@@ -32,10 +32,10 @@ const TableHead = ({ children, field }: TableHeadProps) => {
         {field === sortState.sortBy &&
           (sortDirection === 'default' || sortDirection === '' ? (
             <FaSort data-testid='sortDefault' />
-          ) : sortDirection === 'up' ? (
-            <FaSortUp data-testid='sortAsc' />
+          ) : sortDirection === 'asc' ? (
+            <FaSortUp data-testid='asc' />
           ) : (
-            <FaSortDown data-testid='sortDesc' />
+            <FaSortDown data-testid='desc' />
           ))}
       </div>
     </Wrapper>
