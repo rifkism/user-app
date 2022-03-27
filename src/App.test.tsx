@@ -21,6 +21,13 @@ test('Should render user data', () => {
         email: 'john.doe@example.com',
         gender: 'male',
         phone: '12345',
+        dob: {
+          age: 30,
+        },
+        location: {
+          city: 'Los Angeles',
+          state: 'California',
+        },
       },
     ],
   }))
