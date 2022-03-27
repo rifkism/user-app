@@ -31,6 +31,7 @@ Please install the following:
    ```JS
    npm start
    ```
+   Now http://localhost:8080/user-app should be opened on your browser
 5. To run tests with coverage, please run:
    ```JS
    npm run test:coverage
@@ -39,6 +40,9 @@ Please install the following:
    ```sh
    npm run deploy
    ```
+   
+### Testing Coverage
+<img width="1655" alt="image" src="https://user-images.githubusercontent.com/19601243/160293610-7da4bce9-45cb-4560-8ab0-d876f3da958f.png">
 
 ### Performance Optimzations Used
 
