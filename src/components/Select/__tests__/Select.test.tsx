@@ -6,12 +6,21 @@ import { Select } from '../'
 
 test('Should show label correctly', () => {
   const labelMock = 'Label'
+  const optionsMock = [
+    {
+      label: 'Option 1',
+      value: '1',
+    },
+  ]
 
   render(
-    <Select label={labelMock} name='testSelect'>
-      <option>Option 1</option>
-      <option>Option 2</option>
-    </Select>
+    <Select
+      onChange={jest.fn()}
+      label={labelMock}
+      name='testSelect'
+      options={optionsMock}
+      value='1'
+    />
   )
 
   expect(screen.getByLabelText(labelMock)).toBeInTheDocument()
@@ -19,12 +28,25 @@ test('Should show label correctly', () => {
 
 test('Should handle onChange event', () => {
   const onChangeMock = jest.fn()
+  const labelMock = 'Label'
+  const optionsMock = [
+    {
+      label: 'Option 1',
+      value: '1',
+    },
+    {
+      label: 'Option 2',
+      value: '2',
+    },
+  ]
 
   render(
-    <Select label='label' name='testSelect' onChange={onChangeMock}>
-      <option value='1'>Option 1</option>
-      <option value='2'>Option 2</option>
-    </Select>
+    <Select
+      onChange={onChangeMock}
+      label={labelMock}
+      name='testSelect'
+      options={optionsMock}
+    />
   )
 
   userEvent.selectOptions(screen.getByRole('combobox'), ['2'])
