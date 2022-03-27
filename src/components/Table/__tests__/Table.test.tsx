@@ -7,7 +7,7 @@ import { TableRow } from '../TableRow'
 test('Should render TableRow correctly', () => {
   const handleSortMock = jest.fn()
   render(
-    <Table onSort={handleSortMock} sortDirection='up' sortBy='name'>
+    <Table onSort={handleSortMock} sortDirection='asc' sortBy='name'>
       <tbody>
         <TableRow>
           <TableHead field='name'>Name</TableHead>
@@ -18,5 +18,5 @@ test('Should render TableRow correctly', () => {
     </Table>
   )
 
-  expect(screen.getByTestId('sortAsc')).toBeInTheDocument()
+  expect(screen.getByTestId('asc')).toBeInTheDocument()
 })
