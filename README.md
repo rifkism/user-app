@@ -1,6 +1,12 @@
 # React User App
 A React app displaying data from https://randomuser.me/
 
+### Features
+- Search users
+- Filter users by gender
+- Pagination
+- Sort users
+
 ### Prerequisites
 
 Please install the following:
