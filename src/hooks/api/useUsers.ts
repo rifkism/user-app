@@ -28,11 +28,11 @@ const useUsers = (
       const response = await axios({
         method: 'GET',
         params: {
-          keyword,
-          gender: genderFilter,
-          sortBy,
-          sortDirection,
-          page,
+          ...(keyword ? { keyword } : {}),
+          ...(genderFilter ? { gender: genderFilter } : {}),
+          ...(sortBy ? { sortBy } : {}),
+          ...(sortDirection ? { sortDirection } : {}),
+          ...(page ? { page } : {}),
           results: 50,
         },
         url: 'https://randomuser.me/api',
