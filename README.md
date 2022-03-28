@@ -6,6 +6,7 @@ A React app displaying data from https://randomuser.me/
 - Filter users by gender
 - Pagination
 - Sort users
+- Shareable link with params (Filter, sort and search state will correspond to the query params of a pasted link)
 
 ### Prerequisites
 
